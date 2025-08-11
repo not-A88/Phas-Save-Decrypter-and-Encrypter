@@ -1,5 +1,13 @@
 # Phas-Save-Decrypter-and-Encrypter
 
+## Save File Location
+
+The save file can be found at:
+
+```
+%appdata%\..\LocalLow\Kinetic Games\Phasmophobia\saveFIle.txt
+```
+
 A simple Rust CLI tool to decrypt and encrypt Phasmophobia save files.
 
 ## Features
