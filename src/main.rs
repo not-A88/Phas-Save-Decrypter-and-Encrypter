@@ -27,8 +27,28 @@ fn encrypt_file() {
         }
     };
 
+
+    // Try to get IV from saveFile.txt if it exists
     let mut iv = [0u8; 16];
-    OsRng.fill_bytes(&mut iv);
+    let savefile_path = "saveFile.txt";
+    let iv_from_savefile = fs::read(savefile_path)
+        .ok()
+        .and_then(|data| {
+            if data.len() >= 16 {
+                let mut arr = [0u8; 16];
+                arr.copy_from_slice(&data[..16]);
+                Some(arr)
+            } else {
+                None
+            }
+        });
+    if let Some(existing_iv) = iv_from_savefile {
+        iv = existing_iv;
+        println!("Using IV from saveFile.txt");
+    } else {
+        OsRng.fill_bytes(&mut iv);
+        println!("Generated new random IV");
+    }
 
     let key = pbkdf2_hmac_array::<Sha1, 16>(PASSWORD, &iv, 100);
 
