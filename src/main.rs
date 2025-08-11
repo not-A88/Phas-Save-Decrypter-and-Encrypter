@@ -46,8 +46,9 @@ fn encrypt_file() {
         iv = existing_iv;
         println!("Using IV from saveFile.txt");
     } else {
-        OsRng.fill_bytes(&mut iv);
-        println!("Generated new random IV");
+        println!("saveFile.txt must be present to extract the IV. Press Enter to exit...");
+        let _ = io::stdin().read_line(&mut String::new());
+        return;
     }
 
     let key = pbkdf2_hmac_array::<Sha1, 16>(PASSWORD, &iv, 100);
