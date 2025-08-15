@@ -40,8 +40,9 @@ A simple Rust CLI tool to decrypt and encrypt Phasmophobia save files.
 
 - **Encryption**
   - Reads `output/unencrypted_savefile.txt`.
-  - Generates a random IV, derives the key using PBKDF2-SHA1, and encrypts the data using AES-128-CBC.
-  - Prepends the IV to the ciphertext and writes the result to `output/savefile.txt`.
+  - Uses the existing IV from the original save file (does **not** generate a random IV), derives the key using PBKDF2-SHA1, and encrypts the data using AES-128-CBC.
+  - Prepends the same IV to the ciphertext and writes the result to `output/savefile.txt`.
+  - This ensures the re-encrypted file works with the actual game, as it matches the expected format and IV.
 
 ## Notes
 - The tool will create the `output` directory automatically if it does not exist.
